@@ -47,7 +47,6 @@
 ;; Compatibility: XEmacs
 ;; Incompatibility: Emacs
 
-;; $Id: buffermenu.el,v 1.11 2001/04/26 17:11:55 bradym Exp $
 
 
 ; Mark modified and read-only buffers in menu
