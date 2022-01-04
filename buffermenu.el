@@ -19,7 +19,7 @@
 ;; 
 ;; Please send comments, criticisms, and suggestions to:
 ;;
-;;        Brady Montz (bradym@balestra.org)
+;;        Brady Montz (bradymontz@mac.com)
 
 ;; Copyright (C) 1997 Brady Montz
 ;;
@@ -40,8 +40,8 @@
 ;; Emacs Lisp Archive Entry
 ;; Filename: buffermenu.el
 ;; Version: 1.1
-;; Author: Brady Montz <bradym@balestra.org>
-;; Maintainer: Brady Montz <bradym@balestra.org>
+;; Author: Brady Montz <bradymontz@mac.com>
+;; Maintainer: Brady Montz <bradymontz@mac.com>
 ;; Description: modifies the xemacs buffer menu to organize files by directory
 ;; Keywords: xemacs, buffer, menu
 ;; Compatibility: XEmacs
