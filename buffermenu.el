@@ -38,7 +38,7 @@
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 
 
-(defun mouse-buffer-menu-buf-dir (buf)
+(defun bm--buffer-directory-group (buf)
   (let* ((name (buffer-name buf))
          (path (buffer-file-name buf))
 	 (misc-p (or (not path) 
@@ -46,10 +46,10 @@
     
     (if misc-p "*Misc*" (file-name-directory path))))
 
-(defun buffer-is-hidden (buf)
+(defun bm--buffer-is-hidden (buf)
   (eq ?\s (aref (buffer-name buf) 0)))
 
-(defun buffer-name-with-flags (buf)
+(defun bm--buffer-name-with-flags (buf)
   (let ((name (buffer-name buf))
         (modified (buffer-modified-p buf))
         (read-only (with-current-buffer buf
@@ -58,14 +58,14 @@
         (string-join (list name (concat "" (if read-only "%") (if modified "*") )) " ")
       name)))
 
-(defun my-mouse-buffer-menu-map (title)
+(defun bm--buffermenu-map (title)
   (let ((buffers (buffer-list))
         split-by-dir)
     ;; build up the list of non-hidden buffers grouped by directory
     (dolist (buf buffers)
-      (unless (buffer-is-hidden buf)
+      (unless (bm--buffer-is-hidden buf)
         (let* ((name (buffer-name buf))
-               (dir (mouse-buffer-menu-buf-dir buf))
+               (dir (bm--buffer-directory-group buf))
                elt)
           (setq elt (assoc dir split-by-dir))
           (unless elt
@@ -96,13 +96,13 @@
              (let ((dir (car x))
                    (buf-list (cdr x)))
                (cons dir (mapcar
-                          (lambda (buf) (cons (buffer-name-with-flags buf) buf))
+                          (lambda (buf) (cons (bm--buffer-name-with-flags buf) buf))
                           buf-list))))
            split-by-dir))))
 
-(defun my-mouse-buffer-menu-body (event title func)
+(defun bm-buffermenu-body (event title func)
   (mouse-minibuffer-check event)
-  (let ((buf (x-popup-menu event (my-mouse-buffer-menu-map title)))
+  (let ((buf (x-popup-menu event (bm--buffermenu-map title)))
         (window (posn-window (event-start event))))
     (when buf
       (select-window
@@ -110,15 +110,25 @@
          window))
       (apply func (list buf)))))
 
-(defun my-mouse-buffer-menu (event)
-  (interactive "e")
-  (my-mouse-buffer-menu-body event "Switch to buffer" 'switch-to-buffer))
+(defun mouse-buffer-menu (event)
+  "Pop up a menu grouping buffers by their directory, for selection with the
+mouse. This switches buffers in the window that you clicked on, and selects
+that window.
 
-(defun my-mouse-bufferkill-menu (event)
+Buffers without a directory are displayed in the *Misc* group."
   (interactive "e")
-  (my-mouse-buffer-menu-body event "Kill buffer" 'kill-buffer))
+  (bm-buffermenu-body event "Switch to buffer" 'switch-to-buffer))
 
-(global-set-key [C-mouse-1] #'my-mouse-buffer-menu)
-(global-set-key [C-down-mouse-1] #'my-mouse-buffer-menu)
-(global-set-key [C-down-mouse-2] #'my-mouse-bufferkill-menu)
+(defun mouse-bufferkill-menu (event)
+  "Pop up a menu grouping buffers by their directory, for selection with the
+mouse. The selected buffer is killed.
+
+Buffers without a directory are displayed in the *Misc* group."
+  (interactive "e")
+  (bm-buffermenu-body event "Kill buffer" 'kill-buffer))
+
+;; To enable this, do (uses down-going events so the release makes selection):
+
+; (global-set-key [C-down-mouse-1] #'mouse-buffer-menu)
+; (global-set-key [C-down-mouse-2] #'mouse-bufferkill-menu)
 
