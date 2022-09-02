@@ -16,11 +16,19 @@
 ;; to (control button2)
 ;;
 ;; This code test with emacs version 28, prior versions YMMV
+;;
+;; To enable this, first load the library, then bind to whatever mouse
+;; event you prefer:
+;;
+;; (require 'buffermenu)
+;; (global-set-key [C-down-mouse-1] #'mouse-buffer-menu)
+;; (global-set-key [C-down-mouse-2] #'mouse-bufferkill-menu)
+;;
 ;; 
 ;; Please send comments, criticisms, and suggestions to:
 ;;
 ;;        Brady Montz (bradymontz@mac.com)
-
+;;
 ;; Copyright (C) 1997-2022 Brady Montz
 ;;
 ;; This program is free software; you can redistribute it and/or
@@ -127,8 +135,4 @@ Buffers without a directory are displayed in the *Misc* group."
   (interactive "e")
   (bm-buffermenu-body event "Kill buffer" 'kill-buffer))
 
-;; To enable this, do (uses down-going events so the release makes selection):
-
-; (global-set-key [C-down-mouse-1] #'mouse-buffer-menu)
-; (global-set-key [C-down-mouse-2] #'mouse-bufferkill-menu)
-
+(provide 'buffermenu)
