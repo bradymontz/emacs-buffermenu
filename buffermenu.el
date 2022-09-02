@@ -15,7 +15,8 @@
 ;; 3. Binds the buffer menu to (control button1) and the bufferkill menu
 ;; to (control button2)
 ;;
-;; This code test with emacs version 28, prior versions YMMV
+;; This code tested with emacs version 28, prior versions YMMV. It's as close to
+;; a drop-in replace for the buffermenu feature I'd written for xemacs. 
 ;;
 ;; To enable this, first load the library, then bind to whatever mouse
 ;; event you prefer:
@@ -24,7 +25,6 @@
 ;; (global-set-key [C-down-mouse-1] #'mouse-buffer-menu)
 ;; (global-set-key [C-down-mouse-2] #'mouse-bufferkill-menu)
 ;;
-;; 
 ;; Please send comments, criticisms, and suggestions to:
 ;;
 ;;        Brady Montz (bradymontz@mac.com)
